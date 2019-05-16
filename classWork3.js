@@ -17,7 +17,7 @@ window.onload = function() {
       let row = table.rows[i];
       row.cells[i].style.backgroundColor = 'red';
     }
-}
+};
 
 // task 3
 function createCloneNode(block) {
@@ -48,24 +48,37 @@ addChildrenTo('div', 3, 'p');
 
 // task 5
 function setColor(text) {
-    let body = document.querySelector('body');
-    let colors = ['red', 'blue', 'green'];
-    let textArray = text.split(' ');
+    let task5 = document.getElementById('task-5');
+    let colors = ['red', 'blue', 'yellow'];
+    let textArray = text.split('');
     
     for (let i = 0; i < textArray.length; i++) {
         for (let j = 0; j < textArray[i].length; j++) {
             let span = document.createElement('span');
+            let allSpan = task5.querySelectorAll('span');
             let newColor = Math.round(Math.random()*(colors.length));
+
+            if (colors[newColor] == undefined) {
+                allSpan.forEach(el => {
+                    el.remove();
+                });
+                
+                setColor(text);
+                return;
+            }
+
+            if (i > 0 && allSpan[i - 1].style.color === colors[newColor]) {
+                allSpan.forEach(el => {
+                    el.remove();
+                });
+                
+                setColor(text);
+                return;
+            }
             
             span.textContent = textArray[i][j];
             span.style.color = colors[newColor];
-
-            body.appendChild(span);
-        }
-        if (i != (textArray.length - 1)) {
-            let span = document.createElement('span');
-            span.textContent = ' ';
-            body.appendChild(span);
+            task5.appendChild(span);
         }
     }
 }
